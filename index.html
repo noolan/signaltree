@@ -3,40 +3,52 @@
 <head>
 	<title>Signal Tree</title>
 
-	<meta property="og:url" content="https://www.signaltree.io" />
+	<meta property="og:url" content="https://www.signaltree.ca" />
 	<meta property="og:title" content="Signal Tree Website Consulting" />
 	<meta property="og:description" content="Website Consulting and Custom Developing" />
-	<meta property="og:image" content="https://www.signaltree.io/img/og_share.png" />
+	<meta property="og:image" content="https://www.signaltree.ca/img/og_share.png" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="628" />
 
-	<link href="https://fonts.googleapis.com/css?family=IM+Fell+Great+Primer&text=STaegilnr" rel="stylesheet">
 	<style>
-		body, main, h1, h2, footer, a { margin: 0; padding: 0; }
+    @font-face {
+      font-family: 'IM Fell Great Primer';
+      font-style: normal;
+      font-weight: 400;
+      src: local('IM FELL Great Primer Roman'), local('IM_FELL_Great_Primer_Roman'), url(https://fonts.gstatic.com/l/font?kit=AL8ALGNthei20f9Cu3e93qXlr8r3Ls2CTN9vIymRW1G1k0-76e06XJjX918G9Hpb&skey=906399d54c97c2e3&v=v7) format('woff2');
+    }
+
+		html, body, main, h1, h2, footer, a { margin: 0; padding: 0; box-sizing: border-box; }
+
+		html {
+		  font-size: calc(5vmin - 1vmax);
+		}
+		@media screen and (min-width: 1000px) {
+		  html {
+		    font-size: calc(4vmin - 1vmax);
+		  }
+		}
 
 		body {
-			/*#cb2d3e #ef473a*/
-			background: linear-gradient(to top, #003973 , #E5E5BE);a
-			background: linear-gradient(to top, #e9d362 , #333333);
-			background: linear-gradient(to top, #649173 , #DBD5A4);
-			background: linear-gradient(to top, #A8CABA , #5D4157);
-			background: linear-gradient(to top, #403B4A , #E7E9BB);
-			box-sizing: border-box;
-			font-size: calc(4vh - 1vw);
+			background-color: #ffffff;
 			font-family: sans-serif;
 			font-weight: 100;
 			position: relative;
+			width: 100vw;
+			height: 100vh;
 		}
 
 		main {
-			height: 100vh;
-			background: url('/img/tree.svg');
-			background-repeat: no-repeat;
-			background-position: 50% calc(8vw + 99%);
-			background-size: contain;
-			padding: 0 1vw;
+			width: 100%;
+			height: 100%;
+			padding: 1em 0;
 			opacity: 1;
 			transition: opacity 500ms ease-in;
+			background:
+				url(img/signal_tree_white.svg) left 50% bottom / 70vmax no-repeat,
+				linear-gradient(to top left, #00838F, #213491),
+				linear-gradient(to top right, rgba(205, 220, 57, 0.67) , rgba(33, 52, 145, 0));
+			background-blend-mode: soft-light;
 		}
 
 		main.loading {
@@ -46,69 +58,65 @@
 		h1 {
 			text-align: center;
 			font-family: 'IM Fell Great Primer', serif;
-			padding-top: 1em;
 			font-weight: 400;
-			font-size: 3em;
+			font-size: 4em;
 			position: relative;
 		}
-
 		h1 u {
 			text-decoration: none;
-			border-bottom: .05em solid rgba(0,0,0,0.7);
+			border-bottom: .05em solid #888888;
 			display: inline-block;
 			line-height: .95em;
 		}
 
 		h2 {
 			text-align: center;
-			font-size: .8em;
+			font-size: 1.1em;
 			letter-spacing: .3em;
 			font-weight: 100;
+		}
+
+		h1, h2, a {
+			color: #888888;
+			mix-blend-mode: multiply;
 		}
 
 		footer {
 			position: absolute;
 			bottom: 0;
 			width: 100%;
-			color: #E7E9BB;
+			padding: 2em 0;
 			text-align: center;
-			font-size: .7em;
-			opacity: 0.6;
-			transition: opacity 350ms ease;
-
+			font-size: 1.2em;
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: space-around;
 		}
-		footer:hover {
-			opacity: .9;
-		}
-
-		footer > * {
-
-		}
 
 		footer > a {
-			color: #E7E9BB;
-			text-decoration: none;
+			text-decoration-style: initial;
+			text-decoration-color: #aaaaaa; 
 			text-align: center;
 			display: inline-block;
-			padding: 1em;
+			padding: 0 1em;
+			cursor: pointer;
 		}
 		footer > a:hover {
-			color: #fff;
+			color: #666666;
+			text-decoration-color: #888888;
 		}
 	</style>
 </head>
+
 <body>
 	<main class="loading">
 		<h1><u>Si</u>g<u>nal Tree</u></h1>
 		<h2>WEBSITE CONSULTING</h2>
+		<footer>
+			<a href="tel:+17787382134">(778) 738-2134</a>
+			<a href="mailto:consulting@signaltree.ca">consulting@signaltree.ca</a>
+		</footer>
 	</main>
-	<footer>
-		<a href="tel:+17787382134">(778) 738-2134</a>
-		<a href="mailto:consulting@signaltree.io">consulting@signaltree.io</a>
-	</footer>
 
 	<script>
 	window.addEventListener('load', function() {
@@ -124,7 +132,6 @@
 
         ga('create', 'UA-87700597-1', 'auto');
         ga('send', 'pageview');
-
     </script>
 </body>
 </html>
