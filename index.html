@@ -21,7 +21,7 @@
       	url(https://fonts.gstatic.com/l/font?kit=AL8ALGNthei20f9Cu3e93qXlr8r3Ls2CTN9vIymRW1G1k0-76e06XJjX918G9Hpb&skey=906399d54c97c2e3&v=v7) format('woff2');
     }
 
-		html, body, main, h1, h2, footer, a { margin: 0; padding: 0; box-sizing: border-box; }
+		html, body, main, figure, img, h1, h2, footer, a { margin: 0; padding: 0; box-sizing: border-box; }
 
 		html {
 		  font-size: calc(5vmin - 1vmax);
@@ -34,11 +34,14 @@
 
 		body {
 			background-color: #ffffff;
+			background-image: url(img/shapes_bkg.svg);
+			background-size: cover;
 			font-family: sans-serif;
 			font-weight: 100;
 			position: relative;
 			width: 100vw;
 			height: 100vh;
+			overflow: hidden;
 		}
 
 		main {
@@ -46,16 +49,30 @@
 			height: 100%;
 			padding-top: 5vh;
 			opacity: 1;
-			transition: opacity 500ms ease-in, background 300ms ease;
+			transition: opacity 500ms ease-in;
 			background:
-				url(img/signal_tree_888.svg) left 50% bottom 0 / 100vmin no-repeat,
-				linear-gradient(to top left, #00838F, #213491),
+				linear-gradient(to top left, rgba(0, 131, 143, 1), rgba(33, 52, 145, 0.5)),
 				linear-gradient(to top right, rgba(205, 220, 57, 0.67) , rgba(33, 52, 145, 0));
-			background-blend-mode: multiply;
 		}
 
 		main.loading {
 			opacity: 0;
+		}
+
+		figure.foreground {
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-around;
+			position: absolute;
+			top: 0; right: 0; bottom: -1%; left: 0;
+			pointer-events: none;
+			mix-blend-mode: multiply;
+			text-align: center;
+			vertical-align: bottom;
+		}
+		figure.foreground > img {
+			height: 80%;
+			width: auto;
 		}
 
 		h1 {
@@ -67,7 +84,7 @@
 		}
 		h1 u {
 			text-decoration: none;
-			border-bottom: .05em solid #888888;
+			border-bottom: .05em solid #bbb;
 			display: inline-block;
 			line-height: .95em;
 		}
@@ -80,8 +97,8 @@
 		}
 
 		h1, h2, a {
-			color: #888888;
-			mix-blend-mode: multiply;
+			color: #bbb;
+			mix-blend-mode: luminosity;
 		}
 
 		footer {
@@ -97,22 +114,23 @@
 		}
 
 		footer > a {
-			text-decoration-style: initial;
-			text-decoration-color: #aaaaaa; 
+			text-decoration-style: dotted;
+			text-decoration-color: #888; 
 			text-align: center;
 			display: inline-block;
 			padding: 0 1em;
 			cursor: pointer;
 		}
 		footer > a:hover {
-			color: #666666;
-			text-decoration-color: #888888;
+			color: #ddd;
+			text-decoration-color: #bbb;
 		}
 	</style>
 </head>
 
 <body>
 	<main class="loading">
+		<figure class="foreground"><img src="img/signal_tree_888.svg"></figure>
 		<h1><u>Si</u>g<u>nal Tree</u></h1>
 		<h2>WEBSITE CONSULTING</h2>
 		<footer>
@@ -128,29 +146,36 @@
 	</script>
 
 	<script>
-		var rb = { r: { v: 0, d: 0 }, g: { v: 131, d: 0 }, b: { v: 143, d: 0 }, o: { v: 1, d: 0 }, }
-		var rt = { r: { v: 33, d: 0 }, g: { v: 52, d: 0 }, b: { v: 145, d: 0 }, o: { v: .5, d: 0 }, }
-		var lb = { r: { v: 205, d: 0 }, g: { v: 220, d: 0 }, b: { v: 57, d: 0 }, o: { v: 0.67, d: 0 }, }
-		var lt = { r: { v: 33, d: 0 }, g: { v: 52, d: 0 }, b: { v: 145, d: 0 }, o: { v: 0, d: 0 }, }
+		var rb = { r: { v:   0, d: 0 }, g: { v: 131, d: 0 }, b: { v: 143, d: 0 }, o: { v: 1,    d: 0 }, }
+		var rt = { r: { v:  33, d: 0 }, g: { v:  52, d: 0 }, b: { v: 145, d: 0 }, o: { v: 0.5,  d: 0 }, }
+		var lb = { r: { v: 205, d: 0 }, g: { v: 220, d: 0 }, b: { v:  57, d: 0 }, o: { v: 0.67, d: 0 }, }
+		var lt = { r: { v:  33, d: 0 }, g: { v:  52, d: 0 }, b: { v: 145, d: 0 }, o: { v: 0,    d: 0 }, }
+		var main = document.querySelector('main')
+
+		var min = 50
+		var max = 200
+		var delta = 2
+		var intervalDelay = 50
+
+		var minDelta = delta * -1
+		var maxDelta = delta
 
 		var adjustColor = function (color) {
 			color.d += Math.round(Math.random() * 2) - 1
-			if (color.v + color.d <= 50) {
-				color.d = (Math.floor((color.v - 50) / 2) * -1) + 2
-			} else if (color.v + color.d >= 200) {
-				color.d = Math.floor((200 - color.v) / 2) - 2
-			} else if (color.d <= -5){
-				color.d = -3
-			} else if (color.d >= 5){
-				color.d = 3
+			if (color.v + color.d <= min) {
+				color.d = (Math.floor((color.v - min) / 2) * -1) + 2
+			} else if (color.v + color.d >= max) {
+				color.d = Math.floor((max - color.v) / 2) - 2
+			} else if (color.d < minDelta){
+				color.d = minDelta + 1
+			} else if (color.d >= maxDelta){
+				color.d = maxDelta - 1
 			}
 
 			color.v += color.d
 		}
 
-		var main = document.querySelector('main')
-		
-		var interval = setInterval(function () {
+		var updateBackground = function () {
 			adjustColor(rb.r)
 			adjustColor(rb.g)
 			adjustColor(rb.b)
@@ -159,7 +184,7 @@
 			adjustColor(lb.g)
 			adjustColor(lb.b)
 
-			var style = 'url(img/signal_tree_888.svg) left 50% bottom 0 / 100vmin no-repeat, '
+			var style = ''
 
 			style += 'linear-gradient(to top left, '
 			style += 'rgba(' + rb.r.v + ',' + rb.g.v + ',' + rb.b.v + ',' + rb.o.v + '),'
@@ -170,7 +195,9 @@
 			style += 'rgba(' + lt.r.v + ',' + lt.g.v + ',' + lt.b.v + ',' + lt.o.v + '))'
 
 			main.style.background = style
-		}, 100)
+		}
+
+		var interval = setInterval(updateBackground, intervalDelay)
 		
 	</script>
 
